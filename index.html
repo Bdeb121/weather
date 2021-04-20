@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Jokes | App</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                outline: none;
+            }
+            body {
+                background-color: #f8f9fc;
+                font-family: Arial, Helvetica, sans-serif;
+            }
+            .container {
+                display: flex;
+                flex-direction: column;
+                max-width: 640px;
+                margin: 50px auto;
+                padding: 10px 20px 20px;
+                box-shadow: 0 3px 5px 1px rgba(0, 0, 0, 0.2);
+                background-color: #ffffff;
+                border-radius: 12px;
+            }
+            h1 {
+                font-weight: 500;
+                padding: 6px 0;
+                color: #292929;
+            }
+            ul {
+                border-top: 1px solid #d3d3d3;
+                border-bottom: 1px solid #d3d3d3;
+                padding: 6px 0px 6px 20px;
+                color: #393939;
+            }
+            li {
+                padding: 6px 0;
+            }
+            button {
+                align-self: flex-end;
+                margin-top: 16px;
+                padding: 6px 8px;
+                font-size: 16px;
+                background: #f8f9fc;
+                border: 1px solid #d3d3d3;
+                border-radius: 8px;
+                transition: all 0.2s ease-in-out;
+            }
+            button:hover {
+                background: #f1f1f1;
+            }
+            
+            @media(max-width: 640px){
+                .container {
+                    margin: 50px 10px;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Random Jokes</h1>
+            <ul class="output"></ul>
+            <button class="get">Get Jokes</button>
+        </div>
+
+        <script>
+            let output = document.querySelector('.output');
+            let get = document.querySelector('.get');
+
+
+            async function fetchData() {
+                let data = await fetch('https://api.icndb.com/jokes/random/5');
+                let info = await data.json();
+
+                output.innerHTML = '';
+                for (let i = 0; i < info.value.length; i++) {
+                    output.innerHTML += `<li> ${info.value[i].joke} </li>`;
+                }
+
+            }
+
+            fetchData();
+
+            get.addEventListener('click', fetchData);
+        </script>
+    </body>
+</html>
+
+!
